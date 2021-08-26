@@ -4,23 +4,31 @@ const Schema = mongoose.Schema;
 
 const propertySchema = new Schema(
   {
-    advertismentType:{type: String},
+    name: { type: String, required: true },
+    tpNumber: { type: String },
+    email: { type: String},
+    date:{type:String},
+    district: { type: String, required: true },
+    area: { type: String, required: true },
+    price:{type:String,required:true},
+    description: { type: String, required: true },
+    images:{type:Array},
+    listingType: { type: String, enum: ["services", "property",'electronic',"vehicle","other"], default: "other" },
+    advertismentType:{type:String},
     title:{type: String},
     propertyCategory:{type: String},
     propertyType:{type: String},
     size:{type:String},
-    totalPrice:{type:String},
-    basicData:[{type:Schema.Types.ObjectId,ref:'BasicData'}]
+   
   },
   { timestamps: true }
-);
+); 
 
-basciSchema.plugin(uniqueValidator);
-
-const Property = mongoose.model("Property", basciSchema);
+  
+const Property = mongoose.model("Property", propertySchema);
 
 module.exports = Property;
-
+ 
 
 
 
