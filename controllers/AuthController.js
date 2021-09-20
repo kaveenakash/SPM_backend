@@ -5,6 +5,7 @@ const uuid = require("uuid");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { OAuth2Client } = require("google-auth-library");
+const { response } = require("express");
 const client = new OAuth2Client(
   "496877226261-ut83ih6oniovoejte0f1qu2slhltjjhb.apps.googleusercontent.com"
 );
@@ -192,8 +193,25 @@ const GoogleLogin = async (req, res, next) => {
     });
 };
 
+const DeleteUser = async(req,res) => {
+  if(!req.body){
+    new HttpError("Please provide user id", 422)
+  }
+  const {id}=req.body
+  try{
+  const response = await User.findOneAndRemove({_id:id})
+  }catch (error){
+    new HttpError("Can't delete user account", 422)
+  }
+  return res.status(200).json({
+    response
+  })
+}
+
+
 module.exports = {
   SignUp,
   Login,
   GoogleLogin,
+  DeleteUser
 };
