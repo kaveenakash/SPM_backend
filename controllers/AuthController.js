@@ -78,7 +78,6 @@ const SignUp = async (req, res, next) => {
 // Login function
 const Login = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email)
   let existingUser;
   try {
     existingUser = await User.findOne({ email: email });
@@ -86,13 +85,13 @@ const Login = async (req, res, next) => {
     const error = new HttpError(
       "Logging in failed, Please try again later",
       500
-    );
-    return next(error);
-  }
-  if (!existingUser) {
-    const error = new HttpError("Invalid credentials,could not log in", 401);
-    return next(error);
-  }
+      );
+      return next(error);
+    }
+    if (!existingUser) {
+      const error = new HttpError("Invalid credentials,could not log in", 401);
+      return next(error);
+    }
   let isValidPassword = false;
   try {
     isValidPassword = await bcrypt.compare(password, existingUser.password);
@@ -208,10 +207,35 @@ const DeleteUser = async(req,res) => {
   })
 }
 
+const UpdatePassword = async(req,res,next) => {
+  const { id,previousPassword,newPassword} = req.body;
+  const user=await User.findById(id)
+  if(!user){
+    new HttpError("User does not exist", 422)
+  }
+  if(!(user.password===previousPassword)){
+    new HttpError("Password does not match", 422)
+  }
+  try{
+  let hashedPassword = await bcrypt.hash(newPassword, 12)
+  const filter = { _id: id };
+  const update = { password: hashedPassword };
+  let response = await User.findOneAndUpdate(filter, update, {new: true,})
+  return res.status(200).json({
+    data:response
+  })
+  }catch(error){
+    new HttpError("Password update failed", 503)
+  }
+
+
+}
+
 
 module.exports = {
   SignUp,
   Login,
   GoogleLogin,
-  DeleteUser
+  DeleteUser,
+  UpdatePassword
 };
