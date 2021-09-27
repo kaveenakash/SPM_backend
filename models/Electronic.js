@@ -13,7 +13,6 @@ const electronicSchema = new Schema(
     description: { type: String, required: true },
     images:{type:Array},
     listingType: { type: String, enum: ["services", "property",'electronic',"vehicle","other"], default: "other" },
-    advertismentType:{type:String},
     title:{type: String},
     electronicCategory:{type: String},
     condition:{type: String},
