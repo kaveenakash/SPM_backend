@@ -8,6 +8,7 @@ const HttpError = require("./models/http-error");
 
 const vehicleRoutes = require("./routes/vehicle-routes");
 const propertyRoutes = require("./routes/property-routes");
+const electronicRoutes = require("./routes/electronic-routes");
 
 app.use(cors());
 app.use(express.json());
@@ -15,6 +16,7 @@ app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 app.use("/api/vehicle", vehicleRoutes);
 app.use("/api/property", propertyRoutes);
+app.use("/api/electronic", electronicRoutes);
 
 //404 Error
 app.use((req, res, next) => {
