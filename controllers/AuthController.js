@@ -232,10 +232,45 @@ const UpdatePassword = async(req,res,next) => {
 }
 
 
+const DisplayUserData = async(req,res) => {
+  const { id } = req.body;
+  const user=await User.findById(id)
+  console.log(user);
+  if(!user){
+    new HttpError("User does not exist", 422)
+  }
+      if (id) {
+        User.findOne({ id }).exec((err, user) => {
+          if (err) {
+            return res.status(400).json({
+              error: "Something went wrong",
+            });
+          } else {
+            if (user) {
+              const { _id, fname, lname, email } = user;
+              res.json({
+                userId: _id,
+                email: email,
+                token: token,
+                fname: fname,
+                lname: lname,
+              });
+            }
+          }
+        });
+      }
+      return res.status(200).json({
+        response
+        
+      })
+  
+};
+
 module.exports = {
   SignUp,
   Login,
   GoogleLogin,
   DeleteUser,
-  UpdatePassword
+  UpdatePassword,
+  DisplayUserData
 };
