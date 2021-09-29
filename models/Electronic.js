@@ -26,7 +26,7 @@ const electronicSchema = new Schema(
 ); 
 
   
-const Electonic = mongoose.model("Property", electronicSchema);
+const Electonic = mongoose.model("Electronic", electronicSchema);
 
 module.exports = Electonic;
  

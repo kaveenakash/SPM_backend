@@ -40,7 +40,7 @@ const StoreElectronicListing = async (req, res, next) => {
       area: area,
       description: description,
       images: ["http://localhost:9090/" + req.file.path],
-      listingType:'property',
+      listingType:'electronic',
       title,
       price:price,
       electronicCategory:electronicCategory,
