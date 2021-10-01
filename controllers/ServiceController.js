@@ -35,7 +35,7 @@ const StoreServiceListing = async(req,res,next) =>{
             description: description,
             images: ["http://localhost:9090/" + req.file.path],
             listingType:'service',
-            title:title,
+            title,
             serviceType:serviceType,
             ratings:ratings,
             price:price
