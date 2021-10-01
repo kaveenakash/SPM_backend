@@ -71,8 +71,19 @@ const getVehicleById = async (req, res, next) => {
   } catch (error) {}
 };
 
+const getPendingVehicle = async(req,res) => {
+  try {
+    const vehicleData = await Vehicle.findOne({status:pending});
+    return res.status(200).json(vehicleData)
+    console.log(vehicleData)
+  } catch (error) {
+    
+  }
+}
+
 module.exports = {
   StoreVehicleListing,
   getAllVehicleData,
   getVehicleById,
+  getPendingVehicle
 };

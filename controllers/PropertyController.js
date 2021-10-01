@@ -71,8 +71,6 @@ const getAllPropertyData = async (req, res, next) => {
 
 
 const getPropertyById = async(req,res,next) =>{
-
-  
   const id = req.params.id
   console.log(id) 
   try {
@@ -84,8 +82,19 @@ const getPropertyById = async(req,res,next) =>{
   }
 }
 
+const getPendingProperty = async(req,res) => {
+  try {
+    const propertyData = await Property.findOne({status:pending});
+    return res.status(200).json(propertyData)
+    console.log(propertyData)
+  } catch (error) {
+    
+  }
+}
+
 module.exports = {
     StorePropertyListing,
     getAllPropertyData,
-    getPropertyById
+    getPropertyById,
+    getPendingProperty
 };
