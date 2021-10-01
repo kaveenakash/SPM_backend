@@ -6,17 +6,21 @@ require("dotenv").config();
 const app = express();
 const HttpError = require("./models/http-error");
 
+const serviceRoutes = require('./routes/service-routes')
 const vehicleRoutes = require("./routes/vehicle-routes");
 const propertyRoutes = require("./routes/property-routes");
 const authRoutes = require('./routes/auth-routes')
+
 
 app.use(cors());
 app.use(express.json());
 app.use("/uploads/images", express.static(path.join("uploads", "images"))); 
 
+app.use("/api/service",serviceRoutes)
 app.use("/api/vehicle", vehicleRoutes);
 app.use("/api/property", propertyRoutes);
-app.use("/api/auth",authRoutes)
+app.use("/api/auth",authRoutes);
+
 //404 Error
 app.use((req, res, next) => {
   const error = new HttpError("could not find this route", 404);
