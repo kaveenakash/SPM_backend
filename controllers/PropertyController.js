@@ -38,7 +38,7 @@ const StorePropertyListing = async (req, res, next) => {
       advertismentType:advertismentType,
       area: area,
       description: description,
-      images: ["http://localhost:9090/" + req.file.path],
+      images: ["https://spmsliit.herokuapp.com" + req.file.path],
       listingType:'property',
       title,
       price:price,
