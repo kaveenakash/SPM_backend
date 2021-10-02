@@ -37,7 +37,7 @@ const StoreVehicleListing = async (req, res, next) => {
       district: district,
       area: area,
       description: description,
-      images: ["http://localhost:9090/" + req.file.path],
+      images: ["https://spmsliit.herokuapp.com/" + req.file.path],
       listingType: "vehicle",
       title,
       totalPrice: price,
