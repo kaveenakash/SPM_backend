@@ -1,5 +1,6 @@
 
 const Property = require("../models/Property");
+const User = require("../models/User");
 const HttpError = require("../models/http-error");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
@@ -50,6 +51,11 @@ const StorePropertyListing = async (req, res, next) => {
     });
     console.log(newPropertyData)
     const result = await newPropertyData.save();
+    const user = await User.findOne({_id:userId})
+
+    await user.propertyListings.push(newPropertyData)
+    await user.save()
+
     console.log(result)
     return res.status(200).json(result)
 
