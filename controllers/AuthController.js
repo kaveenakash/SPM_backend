@@ -5,6 +5,7 @@ const uuid = require("uuid");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const Property = require("../models/Property");
+const Vehicle = require("../models/Vehicle");
 const { OAuth2Client } = require("google-auth-library");
 const { response } = require("express");
 const client = new OAuth2Client(
@@ -294,6 +295,15 @@ const removePropertyListings = async(req,res) => {
   console.log(result)
   
 };
+const removeVehicleListings = async(req,res) => {
+  const { userId,itemId } = req.body;
+  const user=await User.findOne({_id:userId})
+  await user.vehicleListings.pull(itemId)
+  await Vehicle.deleteOne({_id:itemId})
+  const result = await user.save()
+  console.log(result)
+  
+};
 
 
 module.exports = {
@@ -304,5 +314,6 @@ module.exports = {
   UpdatePassword,
   DisplayUserData,
   getUserListings,
-  removePropertyListings
+  removePropertyListings,
+  removeVehicleListings
 };
