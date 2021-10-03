@@ -266,11 +266,28 @@ const DisplayUserData = async(req,res) => {
   
 };
 
+
+const getUserListings = async(req,res) => {
+  const { userId } = req.body;
+  const user=await User.findOne({_id:userId})
+  .populate('propertyListings')
+  .then((result) => {
+    res.json(result);
+  })
+  .catch((error) => {
+    res.status(500).json({ error });
+  });
+  
+};
+
+
+
 module.exports = {
   SignUp,
   Login,
   GoogleLogin,
   DeleteUser,
   UpdatePassword,
-  DisplayUserData
+  DisplayUserData,
+  getUserListings
 };
