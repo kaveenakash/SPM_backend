@@ -292,11 +292,12 @@ const removePropertyListings = async(req,res) => {
   await user.propertyListings.pull(itemId)
   await Property.deleteOne({_id:itemId})
   const result = await user.save()
-  console.log(result)
+  // console.log(result)
   
 };
 const removeVehicleListings = async(req,res) => {
   const { userId,itemId } = req.body;
+  console.log(itemId)
   const user=await User.findOne({_id:userId})
   await user.vehicleListings.pull(itemId)
   await Vehicle.deleteOne({_id:itemId})
