@@ -14,12 +14,13 @@ const propertySchema = new Schema(
     description: { type: String, required: true },
     images:{type:Array},
     listingType: { type: String, enum: ["services", "property",'electronic',"vehicle","other"], default: "other" },
+    PermissionStatus: { type: String, enum: ["pending", "approved"], default: "pending" },
     advertismentType:{type:String},
     title:{type: String},
     propertyCategory:{type: String},
     propertyType:{type: String},
     size:{type:String},
-   
+    userId:{type:String}
   },
   { timestamps: true }
 ); 

@@ -18,7 +18,8 @@ const userSchema = new Schema({
     password:{
         type:String,
         required:true
-    }
+    },
+    propertyListings:[{type:Schema.Types.ObjectId,ref:'Property'}]
 },{timestamps:true})
 
 

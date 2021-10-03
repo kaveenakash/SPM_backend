@@ -27,6 +27,7 @@ const StorePropertyListing = async (req, res, next) => {
       propertyType,
       size,
       description, 
+      userId
     } = req.body;
     console.log(price)
     const newPropertyData = new Property({
@@ -44,8 +45,8 @@ const StorePropertyListing = async (req, res, next) => {
       price:price,
       propertyCategory:propertyCategory,
       propertyType:propertyType,
-      size:size
-
+      size:size,
+      userId:userId
     });
     console.log(newPropertyData)
     const result = await newPropertyData.save();
