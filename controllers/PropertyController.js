@@ -30,7 +30,6 @@ const StorePropertyListing = async (req, res, next) => {
       description, 
       userId
     } = req.body;
-    console.log(price)
     const newPropertyData = new Property({
       name: name,
       tpNumber: tpNumber,
@@ -49,12 +48,12 @@ const StorePropertyListing = async (req, res, next) => {
       size:size,
       userId:userId
     });
-    console.log(newPropertyData)
+  
     const result = await newPropertyData.save();
     // const user = await User.findOne({_id:userId})
 
 
-      let tableCategory = await TableCategory.findOneAndUpdate(
+      let user = await User.findOneAndUpdate(
   
         { _id: userId },
   
@@ -63,12 +62,11 @@ const StorePropertyListing = async (req, res, next) => {
         { new: true }
   
       );
-
+        console.log(user)
 
     // await user.propertyListings.push(newPropertyData)
     // await user.save()
 
-    console.log(result)
     return res.status(200).json(result)
 
   } catch (error) {
@@ -81,7 +79,7 @@ const getAllPropertyData = async (req, res, next) => {
   try {
     const propertyData = await Property.find()
     return res.status(200).json(propertyData)
-    console.log(propertyData)
+
   } catch (error) {
     
   }
@@ -93,7 +91,7 @@ const getPropertyById = async(req,res,next) =>{
 
   
   const id = req.params.id
-  console.log(id) 
+
   try {
     const propertyData = await Property.findById(id)
     return res.status(200).json(propertyData)
