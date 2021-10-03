@@ -51,10 +51,22 @@ const StorePropertyListing = async (req, res, next) => {
     });
     console.log(newPropertyData)
     const result = await newPropertyData.save();
-    const user = await User.findOne({_id:userId})
+    // const user = await User.findOne({_id:userId})
 
-    await user.propertyListings.push(newPropertyData)
-    await user.save()
+
+      let tableCategory = await TableCategory.findOneAndUpdate(
+  
+        { _id: userId },
+  
+        { $push: {propertyListings:result._id}},
+  
+        { new: true }
+  
+      );
+
+
+    // await user.propertyListings.push(newPropertyData)
+    // await user.save()
 
     console.log(result)
     return res.status(200).json(result)
