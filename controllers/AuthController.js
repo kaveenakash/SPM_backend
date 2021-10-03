@@ -72,7 +72,7 @@ const SignUp = async (req, res, next) => {
 
   res
     .status(201)
-    .json({ userId: createdUser.id, email: createdUser.email, token: token });
+    .json({ userId: createdUser.id, email: createdUser.email, token: token,fname:fname,lname:lname });
 };
 
 // Login function
@@ -121,6 +121,8 @@ const Login = async (req, res, next) => {
   res.json({
     userId: existingUser.id,
     email: existingUser.email,
+    fname:existingUser.fname,
+    lname:existingUser.lname,
     token: token,
   });
 };
