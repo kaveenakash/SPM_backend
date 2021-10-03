@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const uuid = require("uuid");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const Property = require("../models/Property");
 const { OAuth2Client } = require("google-auth-library");
 const { response } = require("express");
 const client = new OAuth2Client(
@@ -284,6 +285,15 @@ const getUserListings = async(req,res) => {
   
 };
 
+const removePropertyListings = async(req,res) => {
+  const { userId,itemId } = req.body;
+  const user=await User.findOne({_id:userId})
+  await user.propertyListings.pull(itemId)
+  await Property.deleteOne({_id:itemId})
+  const result = await user.save()
+  console.log(result)
+  
+};
 
 
 module.exports = {
@@ -293,5 +303,6 @@ module.exports = {
   DeleteUser,
   UpdatePassword,
   DisplayUserData,
-  getUserListings
+  getUserListings,
+  removePropertyListings
 };

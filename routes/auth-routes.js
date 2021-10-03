@@ -4,7 +4,7 @@ const { check } = require("express-validator");
 
 const checkAuth = require('../middleware/check-auth')
 const fileUpload = require('../middleware/file-upload')
-const {SignUp,Login,GoogleLogin,DeleteUser,UpdatePassword,DisplayUserData,getUserListings} = require('../controllers/AuthController')
+const {SignUp,Login,GoogleLogin,DeleteUser,UpdatePassword,DisplayUserData,getUserListings,removePropertyListings} = require('../controllers/AuthController')
 
 
 router.post("/signup",SignUp)
@@ -16,4 +16,5 @@ router.post('/display-user-data',DisplayUserData)
 
 
 router.post('/get-user-listings',getUserListings)
-module.exports = router  
+router.post('/remove-property-listings',removePropertyListings)
+module.exports = router   

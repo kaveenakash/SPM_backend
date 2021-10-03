@@ -62,7 +62,6 @@ const StorePropertyListing = async (req, res, next) => {
         { new: true }
   
       );
-        console.log(user)
 
     // await user.propertyListings.push(newPropertyData)
     // await user.save()
