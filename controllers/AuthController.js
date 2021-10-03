@@ -273,7 +273,9 @@ const getUserListings = async(req,res) => {
   const { userId } = req.body;
   const user=await User.findOne({_id:userId})
   .populate('propertyListings')
+  .populate('vehicleListings')
   .then((result) => {
+    console.log(result)
     res.json(result);
   })
   .catch((error) => {
