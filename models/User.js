@@ -19,7 +19,8 @@ const userSchema = new Schema({
         type:String,
         required:true
     },
-    propertyListings:[{type:Schema.Types.ObjectId,ref:'Property'}]
+    propertyListings:[{type:Schema.Types.ObjectId,ref:'Property'}],
+    vehicleListings:[{type:Schema.Types.ObjectId,ref:'Vehicle'}]
 },{timestamps:true})
 
 

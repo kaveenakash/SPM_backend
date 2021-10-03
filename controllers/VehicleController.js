@@ -1,4 +1,6 @@
 const Vehicle = require("../models/Vehicle");
+const User = require("../models/User");
+
 const HttpError = require("../models/http-error");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
@@ -27,6 +29,7 @@ const StoreVehicleListing = async (req, res, next) => {
       vehicleCondition,
       vehicleType,
       description,
+      userId
     } = req.body;
 
     const newVehicleData = new Vehicle({
@@ -46,9 +49,20 @@ const StoreVehicleListing = async (req, res, next) => {
       model,
       vehicleCondition,
       modelYear,
+      userId:userId
     });
     const result = await newVehicleData.save();
-    console.log(result);
+
+    let user = await User.findOneAndUpdate(
+  
+      { _id: userId },
+
+      { $push: {vehicleListings:result._id}},
+
+      { new: true }
+
+    );
+
     return res.status(200).json(result);
   } catch (error) {
     new HttpError("Unexpected Error Occurs.", 422);

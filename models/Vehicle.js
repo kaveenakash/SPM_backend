@@ -13,6 +13,7 @@ const vehicleSchema = new Schema(
     description: { type: String, required: true },
     images:{type:Array},
     listingType: { type: String, enum: ["services", "property",'electronic',"vehicle","other"], default: "other" },
+    PermissionStatus: { type: String, enum: ["pending", "approved"], default: "pending" },
     title:{type: String},
     totalPrice:{type:String},
     vehicleType:{type: String},
@@ -20,6 +21,7 @@ const vehicleSchema = new Schema(
     model:{type: String},
     vehicleCondition:{type:String}, 
     modelYear:{type:String},
+    userId:{type:String}
   },
   { timestamps: true }
 ); 
