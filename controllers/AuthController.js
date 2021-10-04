@@ -5,6 +5,7 @@ const uuid = require("uuid");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const Property = require("../models/Property");
+const Message = require("../models/Message");
 const Vehicle = require("../models/Vehicle");
 const { OAuth2Client } = require("google-auth-library");
 const { response } = require("express");
@@ -307,6 +308,48 @@ const removeVehicleListings = async(req,res) => {
 };
 
 
+
+
+const StoreMessage = async (req, res, next) => {
+ 
+  try {
+    const {
+      name,
+      email,
+      message,
+      userId
+    } = req.body;
+    const newMessage = new Message({
+      name: name,
+      email: email,
+     message:message,
+      userId:userId
+    });
+  
+    const result = await newMessage.save();
+    // const user = await User.findOne({_id:userId})
+
+
+      let user = await User.findOneAndUpdate(
+  
+        { _id: userId },
+  
+        { $push: {message:result._id}},
+  
+        { new: true }
+  
+      );
+
+    // await user.propertyListings.push(newPropertyData)
+    // await user.save()
+
+    return res.status(200).json(result)
+
+  } catch (error) {
+    new HttpError("Unexpected Error Occurs.", 422)
+  }
+};
+
 module.exports = {
   SignUp,
   Login,
@@ -316,5 +359,6 @@ module.exports = {
   DisplayUserData,
   getUserListings,
   removePropertyListings,
-  removeVehicleListings
+  removeVehicleListings,
+  StoreMessage
 };
