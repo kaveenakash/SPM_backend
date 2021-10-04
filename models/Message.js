@@ -18,6 +18,7 @@ const messageSchema = new Schema({
     userId:{
         type:String,
     },
+    replyMessage:[{type:String}],
     
 },{timestamps:true})
 

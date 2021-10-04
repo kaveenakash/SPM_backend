@@ -350,6 +350,49 @@ const StoreMessage = async (req, res, next) => {
   }
 };
 
+
+
+
+const GetMessage = async(req,res) => {
+  const { userId } = req.body;
+  const user=await User.findOne({_id:userId})
+  .populate('message')
+  .then((result) => {
+    res.json(result);
+  })
+  .catch((error) => {
+    res.status(500).json({ error });
+  });
+  
+};
+
+
+const SaveReplyMessage = async(req,res) =>{
+  const { messageId,replyMessage } = req.body;
+  console.log(messageId)
+  console.log(replyMessage)
+  
+  try {
+    
+    let message = await Message.findOneAndUpdate(
+
+      { _id: messageId },
+
+      { $push: {replyMessage:replyMessage}},
+
+      { new: true }
+
+    );
+    return res.status(200).json(message)
+  } catch (error) {
+    return res.status(500),json(error)
+  }
+
+  // await user.propertyListings.push(newPropertyData)
+  // await user.save()
+
+}
+
 module.exports = {
   SignUp,
   Login,
@@ -360,5 +403,7 @@ module.exports = {
   getUserListings,
   removePropertyListings,
   removeVehicleListings,
-  StoreMessage
+  StoreMessage,
+  GetMessage,
+  SaveReplyMessage
 };
