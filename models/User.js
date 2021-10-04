@@ -20,7 +20,9 @@ const userSchema = new Schema({
         required:true
     },
     propertyListings:[{type:Schema.Types.ObjectId,ref:'Property'}],
-    vehicleListings:[{type:Schema.Types.ObjectId,ref:'Vehicle'}]
+    vehicleListings:[{type:Schema.Types.ObjectId,ref:'Vehicle'}],
+    message:[{type:Schema.Types.ObjectId,ref:'Message'}],
+    
 },{timestamps:true})
 
 
