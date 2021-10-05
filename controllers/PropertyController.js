@@ -76,7 +76,18 @@ const StorePropertyListing = async (req, res, next) => {
 const getAllPropertyData = async (req, res, next) => {
   
   try {
-    const propertyData = await Property.find()
+    const propertyData = await Property.find({PermissionStatus:"approved"})
+    return res.status(200).json(propertyData)
+
+  } catch (error) {
+    
+  }
+
+};
+const getAll = async (req, res, next) => {
+  
+  try {
+    const propertyData = await Property.find({})
     return res.status(200).json(propertyData)
 
   } catch (error) {
@@ -99,9 +110,49 @@ const getPropertyById = async(req,res,next) =>{
     
   }
 }
+const removeProperty = async(req,res,next) =>{
+
+  
+  const {id} = req.body 
+  console.log(id)
+  try {
+    const propertyData = await Property.deleteOne({_id:id})
+    return res.status(200).json(propertyData)
+
+  } catch (error) {
+    
+  }
+}
+
+const approveProperty = async(req,res,next) =>{
+
+  
+  const id = req.params.id
+
+  const filter = { _id: id };
+  const update = { PermissionStatus: "approved" };
+
+  try {
+    let response = await Property.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+    return res.status(200).json(response)
+  } catch (err) {
+    
+    const error = new HttpError("Unexpected Error Occured", 503);
+    return next(error);
+  }
+
+
+  
+}
+
 
 module.exports = {
     StorePropertyListing,
     getAllPropertyData,
-    getPropertyById
+    getPropertyById,
+    removeProperty,
+    approveProperty,
+    getAll
 };
