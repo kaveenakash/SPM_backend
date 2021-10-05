@@ -71,10 +71,41 @@ const StoreVehicleListing = async (req, res, next) => {
 
 const getAllVehicleData = async (req, res, next) => {
   try {
-    const vehicleData = await Vehicle.find();
+    const vehicleData = await Vehicle.find({PermissionStatus:"approved"});
     return res.status(200).json(vehicleData);
   } catch (error) {}
 };
+const getAllPendingVehicleData = async (req, res, next) => {
+  try {
+    const vehicleData = await Vehicle.find({PermissionStatus:"pending"});
+    return res.status(200).json(vehicleData);
+  } catch (error) {}
+};
+
+
+const approveVehicle = async(req,res,next) =>{
+
+  
+  const id = req.params.id
+
+  const filter = { _id: id };
+  const update = { PermissionStatus: "approved" };
+
+  try {
+    let response = await Vehicle.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+    return res.status(200).json(response)
+  } catch (err) {
+    
+    const error = new HttpError("Unexpected Error Occured", 503);
+    return next(error);
+  }
+
+
+  
+}
+
 
 const getVehicleById = async (req, res, next) => {
   const id = req.params.id;
@@ -85,8 +116,26 @@ const getVehicleById = async (req, res, next) => {
   } catch (error) {}
 };
 
+
+const removeVehicle = async(req,res,next) =>{
+
+  
+  const {id} = req.body 
+  console.log(id)
+  try {
+    const vehicleData = await Vehicle.deleteOne({_id:id})
+    return res.status(200).json(vehicleData)
+
+  } catch (error) {
+    
+  }
+}
 module.exports = {
   StoreVehicleListing,
   getAllVehicleData,
   getVehicleById,
+  getAllPendingVehicleData,
+  removeVehicle,
+  approveVehicle,
+  removeVehicle
 };

@@ -84,6 +84,17 @@ const getAllPropertyData = async (req, res, next) => {
   }
 
 };
+const getAllPendingPropertyData = async (req, res, next) => {
+  
+  try {
+    const propertyData = await Property.find({PermissionStatus:"pending"})
+    return res.status(200).json(propertyData)
+
+  } catch (error) {
+    
+  }
+
+};
 const getAll = async (req, res, next) => {
   
   try {
@@ -154,5 +165,6 @@ module.exports = {
     getPropertyById,
     removeProperty,
     approveProperty,
-    getAll
+    getAll,
+    getAllPendingPropertyData
 };
